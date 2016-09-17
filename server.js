@@ -10,6 +10,52 @@ var webapp = require('./user_modules/user_webapp');
 var udpserver = require('./user_modules/user_udp');
 
 
+
+
+
+
+webapp.get('/mysql/count/:table/', function(req, res){ 
+      var  actionSql = "select COUNT(*) as count from "+req.params.table+"";     
+//查 query
+mysqlconn.query(actionSql,function (err, result) {
+        if(err){
+         // $("#dbif").text('[SELECT ERROR] - '+err.message);//("MYSQL:127.0.0.1<br>端口:3306");
+          //console.log('[SELECT ERROR] - ',err.message);
+          res.writeHead(200, {'Content-Type': 'application/json'});          
+          return;
+        }  
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(''+JSON.stringify(result)+'');     
+        });
+     }); 
+
+
+
+webapp.get('/mysql/get/:table/:indexdata/', function(req, res){ 
+      var  actionSql = "SELECT * FROM "+req.params.table+" order by id desc LIMIT " + ((req.params.indexdata-1)*10) + ",10";     
+//查 query
+mysqlconn.query(actionSql,function (err, result) {
+        if(err){
+         // $("#dbif").text('[SELECT ERROR] - '+err.message);//("MYSQL:127.0.0.1<br>端口:3306");
+          //console.log('[SELECT ERROR] - ',err.message);
+          res.writeHead(200, {'Content-Type': 'application/json'});
+          return;
+        }  
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(''+JSON.stringify(result)+'');     
+        });
+     }); 
+
+
+
+
+
+
+
+
+
+
+
 webapp.get('/device/:deviceid/get/', function(req, res){ 
 //      var  actionSql = "SELECT * FROM "+req.params.table+" LIMIT " + ((req.params.indexdata-1)*10) + ",10";     
 //查 query
@@ -51,6 +97,8 @@ webapp.get('/device/:deviceid/set/:sendmsg', function(req, res){
 } 
 
 
+
+
    function reskv(key,res) {
 //  client.auth("f209e5ac54f4444f:WangXuXiao7229026", redis.print);
     // 获取数据，返回String
@@ -69,6 +117,9 @@ webapp.get('/device/:deviceid/set/:sendmsg', function(req, res){
     // });
  //   client.quit();
 }
+
+
+
 
 
 udpserver.on("message", function (msg, rinfo) {

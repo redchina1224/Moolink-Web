@@ -1,0 +1,5 @@
+nohup: ignoring input
+node_redis: Deprecated: The AUTH command contains a "undefined" argument.
+This is converted to a "undefined" string now and will return an error from v.3.0 on.
+Please handle this in your code to make sure everything works as you intended it to.
+node_redis: Warning: Redis server does not require a password, but a password was supplied.

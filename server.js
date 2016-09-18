@@ -1,13 +1,49 @@
 
 var config = require('./config');
 
-var mysqlconn = require('./user_modules/user_mysql');
+//var mysqlconn = require('./user_modules/user_mysql');
 
 var redisclient = require('./user_modules/user_redis');
 
 var webapp = require('./user_modules/user_webapp');
 
 var udpserver = require('./user_modules/user_udp');
+
+
+
+var mysql = require('mysql');
+
+var mysqlconn;
+function handleError () {
+    mysqlconn = mysql.createConnection({
+    host: config.mysql_host,//    host: 'moolinkdat1.mysql.rds.aliyuncs.com',
+    user: config.mysql_username,//user: 'canye',
+    password: config.mysql_password,//password: 'canye7229026',
+    database:config.mysql_datebase,
+    port: config.mysql_port
+    });
+
+
+    //连接错误，2秒重试
+    mysqlconn.connect(function (err) {
+        if (err) {
+            console.log('error when connecting to db:', err);
+            setTimeout(handleError , 2000);
+        }
+    });
+
+    mysqlconn.on('error', function (err) {
+        console.log('db error', err);
+        // 如果是连接断开，自动重新连接
+        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+            handleError();
+        } else {
+            throw err;
+        }
+    });
+}
+handleError();
+
 
 
 

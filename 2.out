@@ -3,3 +3,10 @@ node_redis: Deprecated: The AUTH command contains a "undefined" argument.
 This is converted to a "undefined" string now and will return an error from v.3.0 on.
 Please handle this in your code to make sure everything works as you intended it to.
 node_redis: Warning: Redis server does not require a password, but a password was supplied.
+
+events.js:72
+        throw er; // Unhandled 'error' event
+              ^
+Error: Redis connection to 127.0.0.1:6379 failed - connect ECONNREFUSED
+    at errnoException (net.js:901:11)
+    at Object.afterConnect [as oncomplete] (net.js:892:19)

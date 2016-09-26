@@ -16,9 +16,9 @@ var mysql = require('mysql');
 var mysqlconn;
 function handleError () {
     mysqlconn = mysql.createConnection({
-    host: config.mysql_host,//    host: 'moolinkdat1.mysql.rds.aliyuncs.com',
-    user: config.mysql_username,//user: 'canye',
-    password: config.mysql_password,//password: 'canye7229026',
+    host: config.mysql_host,//
+    user: config.mysql_username,//
+    password: config.mysql_password,//
     database:config.mysql_datebase,
     port: config.mysql_port
     });
